@@ -240,7 +240,8 @@
 
       // Click image to open datasheet modal
       img.addEventListener("click", () => {
-        datasheetFrame.src = p.datasheet;
+        // Use Google Docs Viewer to auto-scale PDF
+        datasheetFrame.src = "https://docs.google.com/gview?url=" + encodeURIComponent(p.datasheet) + "&embedded=true";
         modal.classList.add("active");
       });
 
