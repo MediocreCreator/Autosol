@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <h1>
+  <img src="https://autosol.de/wp-content/uploads/2019/04/cropped-logo_autosol.png" alt="AUTOSOL Logo" class="logo">
+</h1>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AUTOSOL</title>
+  <style>
+    /* GENERAL LAYOUT */
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #f5f5f5;
+      color: #333;
+      position: relative;
+    }
+
+    /* BACKGROUND IMAGE WITH BLUR */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("https://assets-us-01.kc-usercontent.com/2a927e0d-6649-001d-033d-d488bdff5f23/def3c403-0c65-48be-8907-4311696af47b/color_main_2_1440x440.jpg") center/cover no-repeat;
+      filter: blur(8px) brightness(0.8);
+      z-index: -2;
+    }
+
+    h1 {
+  margin: 40px 0 20px;
+  text-align: center;
+}
+
+h1 .logo {
+  max-width: 300px; /* adjust size */
+  width: 80%;       /* responsive */
+  height: auto;
+}
+
+    /* CATALOG GRID */
+    .catalog {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      width: 90%;
+      margin-bottom: 60px;
+      z-index: 1;
+    }
+
+    /* PRODUCT CARDS */
+    .product {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .product:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    /* PRODUCT NAME (Top) */
+    .product-name {
+      font-weight: 700;
+      font-size: 17px;
+      color: #111;
+      text-align: center;
+      padding: 12px 8px;
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    /* PRODUCT IMAGE */
+    .product img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background-color: #fff;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .product img:hover {
+      transform: scale(1.05);
+    }
+
+    /* DESCRIPTION */
+    .description {
+      padding: 15px;
+      text-align: center;
+      font-size: 14px;
+      color: #222;
+    }
+
+    /* MODAL OVERLAY */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 10;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    /* MODAL CONTENT */
+    .modal-content {
+      position: relative;
+      width: 80%;
+      height: 80%;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      animation: popup 0.3s ease;
+    }
+
+    @keyframes popup {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* PDF VIEWER INSIDE MODAL */
+    .modal-content iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* CLOSE BUTTON */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      font-size: 20px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="catalog" id="catalog"></div>
+
+  <!-- Modal (Popup) -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="close-btn" id="closeBtn">&times;</button>
+      <iframe id="datasheetFrame"></iframe>
+    </div>
+  </div>
+
+  <script>
+    const products = [
+      {
+        name: "Autosol Metal Polish",
+        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1100-2.jpg?v-cache=1361386817",
+        description: "This incomparably superior, quality metal polish safely and easily removes oxidation, corrosion, stains, and rust. It produces a brilliant reflective luster and leaves an invisible protective coating to ensure a long-lasting shine.",
+        datasheet: "https://www.autosol.com/category_s/1837.htm"
+      },
+      {
+        name: "Liquid Metal Polish",
+        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1210-2.jpg?v-cache=1469787924",
+        description: "The high quality polishing ingredients ensure intensive, yet gentle cleaning. Quick and easy to use, removes oxidation, tarnishes and stains, resulting in a brilliant finish. Also protects against future rust and tarnish.",
+        datasheet: "https://www.autosol.com/category_s/1837.htm"
+      },
+      {
+        name: "Aluminium Polish",
+        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1824-2.jpg?v-cache=1361227259",
+        description: "Perfect for cleaning and polishing uncoated aluminum surfaces leaving an unparalleled sheen without scratching or hazing. Remember to spray on Autosol Metal Protective Oil for extreme long lasting protection.",
+        datasheet: "https://www.autosol.com/category_s/1837.htm"
+      },
+      {
+        name: "Autosol Metal Polish",
+        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1100-2.jpg?v-cache=1361386817",
+        description: "This incomparably superior, quality metal polish safely and easily removes oxidation, corrosion, stains, and rust. It produces a brilliant reflective luster and leaves an invisible protective coating to ensure a long-lasting shine.",
+        datasheet: "https://www.autosol.com/category_s/1837.htm"
+      },
+      {
+        name: "Liquid Metal Polish",
+        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1210-2.jpg?v-cache=1469787924",
+        description: "The high quality polishing ingredients ensure intensive, yet gentle cleaning. Quick and easy to use, removes oxidation, tarnishes and stains, resulting in a brilliant finish. Also protects against future rust and tarnish.",
+        datasheet: "https://www.autosol.com/category_s/1837.htm"
+      },
+      {
+        name: "Aluminium Polish",
+        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1824-2.jpg?v-cache=1361227259",
+        description: "Perfect for cleaning and polishing uncoated aluminum surfaces leaving an unparalleled sheen without scratching or hazing. Remember to spray on Autosol Metal Protective Oil for extreme long lasting protection.",
+        datasheet: "https://www.autosol.com/category_s/1837.htm"
+      },
+      {
+        name: "Autosol Metal Polish",
+        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1100-2.jpg?v-cache=1361386817",
+        description: "This incomparably superior, quality metal polish safely and easily removes oxidation, corrosion, stains, and rust. It produces a brilliant reflective luster and leaves an invisible protective coating to ensure a long-lasting shine.",
+        datasheet: "https://www.autosol.com/category_s/1837.htm"
+      },
+      {
+        name: "Liquid Metal Polish",
+        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1210-2.jpg?v-cache=1469787924",
+        description: "The high quality polishing ingredients ensure intensive, yet gentle cleaning. Quick and easy to use, removes oxidation, tarnishes and stains, resulting in a brilliant finish. Also protects against future rust and tarnish.",
+        datasheet: "https://www.autosol.com/category_s/1837.htm"
+      },
+      {
+        name: "Aluminium Polish",
+        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1824-2.jpg?v-cache=1361227259",
+        description: "Perfect for cleaning and polishing uncoated aluminum surfaces leaving an unparalleled sheen without scratching or hazing. Remember to spray on Autosol Metal Protective Oil for extreme long lasting protection.",
+        datasheet: "https://www.autosol.com/category_s/1837.htm"
+      },
+      {
+        name: "Autosol Metal Polish",
+        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1100-2.jpg?v-cache=1361386817",
+        description: "This incomparably superior, quality metal polish safely and easily removes oxidation, corrosion, stains, and rust. It produces a brilliant reflective luster and leaves an invisible protective coating to ensure a long-lasting shine.",
+        datasheet: "https://www.autosol.com/category_s/1837.htm"
+      },
+      {
+        name: "Liquid Metal Polish",
+        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1210-2.jpg?v-cache=1469787924",
+        description: "The high quality polishing ingredients ensure intensive, yet gentle cleaning. Quick and easy to use, removes oxidation, tarnishes and stains, resulting in a brilliant finish. Also protects against future rust and tarnish.",
+        datasheet: "https://www.autosol.com/category_s/1837.htm"
+      },
+      {
+        name: "Aluminium Polish",
+        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1824-2.jpg?v-cache=1361227259",
+        description: "Perfect for cleaning and polishing uncoated aluminum surfaces leaving an unparalleled sheen without scratching or hazing. Remember to spray on Autosol Metal Protective Oil for extreme long lasting protection.",
+        datasheet: "https://www.autosol.com/category_s/1837.htm"
+      }
+    ];
+
+    const catalog = document.getElementById("catalog");
+    const modal = document.getElementById("modal");
+    const datasheetFrame = document.getElementById("datasheetFrame");
+    const closeBtn = document.getElementById("closeBtn");
+
+    // Build product cards
+    products.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "product";
+
+      const name = document.createElement("div");
+      name.className = "product-name";
+      name.textContent = p.name;
+
+      const img = document.createElement("img");
+      img.src = p.image;
+      img.alt = p.name;
+
+      const desc = document.createElement("div");
+      desc.className = "description";
+      desc.textContent = p.description;
+
+      // Click image to open datasheet modal
+      img.addEventListener("click", () => {
+        datasheetFrame.src = p.datasheet;
+        modal.classList.add("active");
+      });
+
+      card.appendChild(name);
+      card.appendChild(img);
+      card.appendChild(desc);
+      catalog.appendChild(card);
+    });
+
+    // Close modal
+    closeBtn.addEventListener("click", () => {
+      modal.classList.remove("active");
+      datasheetFrame.src = "";
+    });
+
+    // Close modal when clicking outside content
+    modal.addEventListener("click", e => {
+      if (e.target === modal) {
+        modal.classList.remove("active");
+        datasheetFrame.src = "";
+      }
+    });
+  </script>
+</body>
+</html>
