@@ -142,11 +142,13 @@
       to { transform: scale(1); opacity: 1; }
     }
 
+    /* NATIVE PDF VIEWER STYLING */
     .modal-content iframe {
       flex: 1;
       width: 100%;
       height: 100%;
       border: none;
+      min-height: 400px;
     }
 
     .close-btn {
@@ -169,7 +171,6 @@
       background: rgba(0, 0, 0, 0.8);
     }
 
-    /* RESPONSIVE MODAL FOR SMALL SCREENS */
     @media (max-width: 500px) {
       .modal-content {
         width: 95%;
@@ -238,10 +239,9 @@
       desc.className = "description";
       desc.textContent = p.description;
 
-      // Click image to open datasheet modal
+      // Click image to open datasheet modal (native PDF viewer)
       img.addEventListener("click", () => {
-        // Use Google Docs Viewer to auto-scale PDF
-        datasheetFrame.src = "https://docs.google.com/gview?url=" + encodeURIComponent(p.datasheet) + "&embedded=true";
+        datasheetFrame.src = p.datasheet; // <-- native PDF
         modal.classList.add("active");
       });
 
