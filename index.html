@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <h1>
-  <img src="https://autosol.de/wp-content/uploads/2019/04/cropped-logo_autosol.png" alt="AUTOSOL Logo" class="logo">
-</h1>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AUTOSOL</title>
@@ -36,15 +33,15 @@
     }
 
     h1 {
-  margin: 40px 0 20px;
-  text-align: center;
-}
+      margin: 40px 0 20px;
+      text-align: center;
+    }
 
-h1 .logo {
-  max-width: 300px; /* adjust size */
-  width: 80%;       /* responsive */
-  height: auto;
-}
+    h1 .logo {
+      max-width: 300px;
+      width: 80%;
+      height: auto;
+    }
 
     /* CATALOG GRID */
     .catalog {
@@ -75,7 +72,6 @@ h1 .logo {
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
     }
 
-    /* PRODUCT NAME (Top) */
     .product-name {
       font-weight: 700;
       font-size: 17px;
@@ -86,7 +82,6 @@ h1 .logo {
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    /* PRODUCT IMAGE */
     .product img {
       width: 100%;
       aspect-ratio: 4 / 3;
@@ -100,7 +95,6 @@ h1 .logo {
       transform: scale(1.05);
     }
 
-    /* DESCRIPTION */
     .description {
       padding: 15px;
       text-align: center;
@@ -131,12 +125,16 @@ h1 .logo {
     .modal-content {
       position: relative;
       width: 80%;
+      max-width: 600px;
       height: 80%;
+      max-height: 90vh;
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
       overflow: hidden;
       animation: popup 0.3s ease;
+      display: flex;
+      flex-direction: column;
     }
 
     @keyframes popup {
@@ -144,14 +142,13 @@ h1 .logo {
       to { transform: scale(1); opacity: 1; }
     }
 
-    /* PDF VIEWER INSIDE MODAL */
     .modal-content iframe {
+      flex: 1;
       width: 100%;
       height: 100%;
       border: none;
     }
 
-    /* CLOSE BUTTON */
     .close-btn {
       position: absolute;
       top: 10px;
@@ -165,14 +162,27 @@ h1 .logo {
       font-size: 20px;
       cursor: pointer;
       transition: background 0.2s ease;
+      z-index: 5;
     }
 
     .close-btn:hover {
       background: rgba(0, 0, 0, 0.8);
     }
+
+    /* RESPONSIVE MODAL FOR SMALL SCREENS */
+    @media (max-width: 500px) {
+      .modal-content {
+        width: 95%;
+        height: 90%;
+      }
+    }
   </style>
 </head>
 <body>
+
+  <h1>
+    <img src="https://autosol.de/wp-content/uploads/2019/04/cropped-logo_autosol.png" alt="AUTOSOL Logo" class="logo">
+  </h1>
 
   <div class="catalog" id="catalog"></div>
 
@@ -202,61 +212,7 @@ h1 .logo {
         name: "Aluminium Polish",
         image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1824-2.jpg?v-cache=1361227259",
         description: "Perfect for cleaning and polishing uncoated aluminum surfaces leaving an unparalleled sheen without scratching or hazing. Remember to spray on Autosol Metal Protective Oil for extreme long lasting protection.",
-        datasheet: "https://www.autosol.com/category_s/1837.htm"
-      },
-      {
-        name: "Autosol Metal Polish",
-        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1100-2.jpg?v-cache=1361386817",
-        description: "This incomparably superior, quality metal polish safely and easily removes oxidation, corrosion, stains, and rust. It produces a brilliant reflective luster and leaves an invisible protective coating to ensure a long-lasting shine.",
-        datasheet: "https://www.autosol.com/category_s/1837.htm"
-      },
-      {
-        name: "Liquid Metal Polish",
-        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1210-2.jpg?v-cache=1469787924",
-        description: "The high quality polishing ingredients ensure intensive, yet gentle cleaning. Quick and easy to use, removes oxidation, tarnishes and stains, resulting in a brilliant finish. Also protects against future rust and tarnish.",
-        datasheet: "https://www.autosol.com/category_s/1837.htm"
-      },
-      {
-        name: "Aluminium Polish",
-        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1824-2.jpg?v-cache=1361227259",
-        description: "Perfect for cleaning and polishing uncoated aluminum surfaces leaving an unparalleled sheen without scratching or hazing. Remember to spray on Autosol Metal Protective Oil for extreme long lasting protection.",
-        datasheet: "https://www.autosol.com/category_s/1837.htm"
-      },
-      {
-        name: "Autosol Metal Polish",
-        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1100-2.jpg?v-cache=1361386817",
-        description: "This incomparably superior, quality metal polish safely and easily removes oxidation, corrosion, stains, and rust. It produces a brilliant reflective luster and leaves an invisible protective coating to ensure a long-lasting shine.",
-        datasheet: "https://www.autosol.com/category_s/1837.htm"
-      },
-      {
-        name: "Liquid Metal Polish",
-        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1210-2.jpg?v-cache=1469787924",
-        description: "The high quality polishing ingredients ensure intensive, yet gentle cleaning. Quick and easy to use, removes oxidation, tarnishes and stains, resulting in a brilliant finish. Also protects against future rust and tarnish.",
-        datasheet: "https://www.autosol.com/category_s/1837.htm"
-      },
-      {
-        name: "Aluminium Polish",
-        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1824-2.jpg?v-cache=1361227259",
-        description: "Perfect for cleaning and polishing uncoated aluminum surfaces leaving an unparalleled sheen without scratching or hazing. Remember to spray on Autosol Metal Protective Oil for extreme long lasting protection.",
-        datasheet: "https://www.autosol.com/category_s/1837.htm"
-      },
-      {
-        name: "Autosol Metal Polish",
-        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1100-2.jpg?v-cache=1361386817",
-        description: "This incomparably superior, quality metal polish safely and easily removes oxidation, corrosion, stains, and rust. It produces a brilliant reflective luster and leaves an invisible protective coating to ensure a long-lasting shine.",
-        datasheet: "https://www.autosol.com/category_s/1837.htm"
-      },
-      {
-        name: "Liquid Metal Polish",
-        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1210-2.jpg?v-cache=1469787924",
-        description: "The high quality polishing ingredients ensure intensive, yet gentle cleaning. Quick and easy to use, removes oxidation, tarnishes and stains, resulting in a brilliant finish. Also protects against future rust and tarnish.",
-        datasheet: "https://www.autosol.com/category_s/1837.htm"
-      },
-      {
-        name: "Aluminium Polish",
-        image: "https://cdn4.volusion.store/krcyo-mqpav/v/vspfiles/photos/1824-2.jpg?v-cache=1361227259",
-        description: "Perfect for cleaning and polishing uncoated aluminum surfaces leaving an unparalleled sheen without scratching or hazing. Remember to spray on Autosol Metal Protective Oil for extreme long lasting protection.",
-        datasheet: "https://www.autosol.com/category_s/1837.htm"
+        datasheet: "https://cdn.shopify.com/s/files/1/0720/8887/9127/files/msds_autosol_1824.pdf"
       }
     ];
 
@@ -310,5 +266,3 @@ h1 .logo {
   </script>
 </body>
 </html>
-
-
