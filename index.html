@@ -73,14 +73,20 @@
     }
 
     .product-name {
-      font-weight: 700;
-      font-size: 17px;
-      color: #000000;
-      text-align: center;
-      padding: 12px 8px;
-      background: rgba(255, 255, 255, 0.9);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    }
+  font-weight: 700;
+  font-size: 17px;
+  color: #000000;
+  text-align: center;
+  padding: 12px 8px;
+  background: linear-gradient(to bottom, #e7a144, #d68b2e);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  text-shadow:
+    1px 1px 0 #b37a20,   /* dark lower-right bevel */
+    -1px -1px 0 #ffd78c, /* light top-left highlight */
+    0 1px 2px rgba(0,0,0,0.4); /* soft overall depth */
+  box-shadow: inset 0 1px 0 #ffd78c, inset 0 -2px 2px rgba(0,0,0,0.3);
+  border-radius: 4px;
+}
 
     .product img {
       width: 100%;
@@ -98,8 +104,9 @@
     .description {
       padding: 15px;
       text-align: center;
+      background: #33333359;
       font-size: 14px;
-      color: #000000;
+      color: #ffffff;
     }
 
     /* MODAL OVERLAY */
