@@ -416,9 +416,15 @@
 
       // Click image to open datasheet modal
       img.addEventListener("click", () => {
-  datasheetFrame.src = p.datasheet; // load local PDF directly
-  modal.classList.add("active");
-    });
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    window.open(p.datasheet, "_blank");
+  } else {
+    datasheetFrame.src = p.datasheet;
+    modal.classList.add("active");
+  }
+});
 
 
       card.appendChild(name);
